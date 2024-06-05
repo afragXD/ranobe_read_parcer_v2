@@ -12,5 +12,5 @@ fun getChapterName(
     document: Document,
     index: Int,
 ): String {
-    return document.select(chapterNameSelectorList[index]).text()
+    return document.select(chapterNameSelectorList[index]).text().split('•')[0].trimEnd()
 }

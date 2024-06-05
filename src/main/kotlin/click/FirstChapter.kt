@@ -1,13 +1,12 @@
 package click
 
-import info.statusSelectorList
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.coroutines.runBlocking
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import java.time.Duration
+
 
 val firstChapterSelectorList = listOf(
     "#dle-content > article > main > div.str_left > div > div.r-fullstory-s1 > div.r-fullstory-poster > div.r-fullstory-btns > a.btn.read-begin",
@@ -32,7 +31,7 @@ fun firstChapter(
             url = "https://ranobes.com/$url"
         }
         //url = "https://ranobes.com/$url"
-        println(url)
+        //println(url)
         runBlocking {
             // Выполняем запрос и получаем HTML контент страницы
             val response: HttpResponse = client.get(url)

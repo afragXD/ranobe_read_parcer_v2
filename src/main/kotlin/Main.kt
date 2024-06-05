@@ -22,13 +22,13 @@ val url = listOf(
     //"https://ranobes.com/ranobe/305-i-shall-seal-the-heavens.html"
     //"https://ranobelib.me/omniscient-readers-viewpoint-novel?section=info"
 
-    "https://ranobes.com/ranobe/213514-ellen-no-nikki.html"
+    //"https://ranobes.com/ranobe/213514-ellen-no-nikki.html"
 
     //"https://ranobes.com/ranobe/347562-combat-continent.html"
     //"https://ranobes.com/ranobe/287925-never-die-twice.html"
     ////////"https://ranobes.com/ranobe/242439-you-called-on-the-wrong.html"
 
-    //"https://ranobes.com/ranobe/5951-a-will-eternal.html"
+    "https://ranobes.com/ranobe/5951-a-will-eternal.html"
 )
 
 // принимает ссылку на главную страницу произведения
@@ -99,34 +99,20 @@ fun main() = runBlocking {
         )
         println(bookDTO)
 
-        //val bookId = addBook(bookDTO)
+        val bookId = addBook(bookDTO)
 
         document = firstChapter(document, urlIndex, client)
-
-
-        //println(getName(document, urlIndex))
-        //println(getEnName(document, urlIndex))
-        //println(getImg(document, urlIndex))
-        //println(getDescription(document, urlIndex))
-        //println(getRating(document, urlIndex))
-        //println(getStatus(document, urlIndex))
-        //println(getChapters(document, urlIndex))
-        //println(getYear(document, urlIndex))
-        //println(getAuthor(document, urlIndex))
-        //println(getRatingCount(document, urlIndex))
-        //println(getGenres(document, urlIndex))
-        //println(getCountry(document, urlIndex))
 
         for (i in 1..bookDTO.chapters){
             val chapterDTO = ChapterDTO(
                 chapterNumber = i,
                 chapterName = getChapterName(document, urlIndex),
-                bookId = 1,//bookId,
+                bookId = bookId,
                 chapterText = getChapterText(document, urlIndex)
             )
 
-            println(chapterDTO)
-            //addChapter(chapterDTO)
+            //println(chapterDTO)
+            addChapter(chapterDTO)
 
             try {
                 var url = document.select(nextChapterSelectorList[urlIndex]).attr("href")
