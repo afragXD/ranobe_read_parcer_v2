@@ -1,7 +1,6 @@
 package info
 
 import org.jsoup.nodes.Document
-import java.time.Duration
 
 
 val yearSelectorList = listOf(

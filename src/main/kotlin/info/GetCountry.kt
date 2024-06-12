@@ -1,7 +1,6 @@
 package info
 
 import org.jsoup.nodes.Document
-import java.time.Duration
 
 val countrySelectorList = listOf(
     "#fs-info > div.r-fullstory-spec > ul:nth-child(1) > li:nth-child(9) > span > a",
