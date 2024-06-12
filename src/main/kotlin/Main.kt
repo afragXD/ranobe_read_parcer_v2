@@ -33,7 +33,12 @@ val url = listOf(
 
     //"https://ranobes.com/ranobe/234430-a-rattling-monster.html"
     //"https://ranobes.com/ranobe/231996-coeus.html"
-    "https://ranobes.com/ranobe/218148-a-returners-magic-should-be-special.html"
+    //"https://ranobes.com/ranobe/218148-a-returners-magic-should-be-special.html"
+    //"https://ranobes.com/ranobe/68-against-the-gods.html"
+    //"https://ranobes.com/ranobe/134618-lord-of-the-mysteries.html"
+    //"https://ranobes.com/ranobe/151884-the-beginning-after-the-end.html"
+    ////////."https://ranobes.com/ranobe/668-warlock-of-the-magus-world.html" не спарсилось!!!
+    "https://ranobes.com/ranobe/799-renegade-immortal.html"
 
 )
 
