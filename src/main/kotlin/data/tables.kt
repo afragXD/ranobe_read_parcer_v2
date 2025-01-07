@@ -5,24 +5,24 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.Table.Dual.varchar
 import org.jetbrains.exposed.sql.and
 
-object Authors : IntIdTable("authors") {
+object Authors : IntIdTable("\"Authors\"") {
+    val name_en = varchar("name_original", 60)
+}
+
+object Tags : IntIdTable("\"Tag\"") {
     val name = varchar("name", 60)
 }
 
-object Genres : IntIdTable("genres") {
-    val name = varchar("name", 60)
-}
-
-object Countries : IntIdTable("countries") {
+object Countries : IntIdTable("\"Countries\"") {
     val name = varchar("name", 60)
 }
 
 
-object Books : IntIdTable("books") {
+object Ranobe : IntIdTable("\"Ranobe\"") {
     val name = varchar("name", 100)
     val enName = varchar("en_name", 100).nullable()
     val image = varchar("image", 150).nullable()
-    val descript = text("descript").nullable()
+    val description = text("description").nullable()
     val rating = decimal("rating", 3, 2).nullable()
     val status = varchar("status", 50).nullable()
     val chapters = integer("chapters").nullable()
@@ -32,8 +32,8 @@ object Books : IntIdTable("books") {
     val country = reference("country_id", Countries)
 }
 
-object Chapters : IntIdTable("chapters") {
-    val book = reference("book_id", Books)
+object Chapters : IntIdTable("\"Chapter\"") {
+    val book = reference("ranobe_id", Ranobe)
     val chapterNumber = integer("chapter_number")
     val chapterName = varchar("chapter_name", 200)
     val chapterText = mediumText("chapter_text")
@@ -42,8 +42,8 @@ object Chapters : IntIdTable("chapters") {
     }
 }
 
-object BookGenres : Table("book_genres") {
-    val book = reference("book_id", Books)
-    val genre = reference("genre_id", Genres)
+object BookGenres : Table("\"RanobeTags\"") {
+    val book = reference("ranobe_id", Ranobe)
+    val genre = reference("tag_id", Tags)
     override val primaryKey = PrimaryKey(book, genre)
 }

@@ -22,7 +22,7 @@ val url = listOf(
     //"https://ranobes.com/ranobe/305-i-shall-seal-the-heavens.html"
     //"https://ranobelib.me/omniscient-readers-viewpoint-novel?section=info"
 
-    //"https://ranobes.com/ranobe/213514-ellen-no-nikki.html"
+//    "https://ranobes.com/ranobe/213514-ellen-no-nikki.html"
 
     //"https://ranobes.com/ranobe/347562-combat-continent.html"
     //"https://ranobes.com/ranobe/287925-never-die-twice.html"
@@ -33,13 +33,18 @@ val url = listOf(
 
     //"https://ranobes.com/ranobe/234430-a-rattling-monster.html"
     //"https://ranobes.com/ranobe/231996-coeus.html"
-    //"https://ranobes.com/ranobe/218148-a-returners-magic-should-be-special.html"
+//    "https://ranobes.com/ranobe/218148-a-returners-magic-should-be-special.html"
     //"https://ranobes.com/ranobe/68-against-the-gods.html"
     //"https://ranobes.com/ranobe/134618-lord-of-the-mysteries.html"
-    //"https://ranobes.com/ranobe/151884-the-beginning-after-the-end.html"
+//    "https://ranobes.com/ranobe/151884-the-beginning-after-the-end.html"
     ////////."https://ranobes.com/ranobe/668-warlock-of-the-magus-world.html" не спарсилось!!!
-    "https://ranobes.com/ranobe/799-renegade-immortal.html"
+//    "https://ranobes.com/ranobe/799-renegade-immortal.html"
 
+    // мини
+
+//    "https://ranobes.com/ranobe/287925-never-die-twice.html"
+//    "https://ranobes.com/ranobe/347689-douluo-dalu-2-unrivaled-tang-sect.html"
+    "https://ranobes.com/ranobe/183468-katahane-no-riku.html"
 )
 
 // принимает ссылку на главную страницу произведения
@@ -81,7 +86,20 @@ fun main() = runBlocking {
 
             // Парсим HTML с помощью Jsoup
             var document: Document = Jsoup.parse(responseBody)
+            println(document)
 
+            println(getName(document, urlIndex))
+            println(getEnName(document, urlIndex))
+            println(getImg(document, urlIndex))
+            println(getDescription(document, urlIndex))
+            println(getRating(document, urlIndex))
+            println(getStatus(document, urlIndex))
+            println(getChapters(document, urlIndex))
+            println(getYear(document, urlIndex))
+            println(getAuthor(document, urlIndex))
+            println(getRatingCount(document, urlIndex))
+            println(getGenres(document, urlIndex))
+            println(getCountry(document, urlIndex))
 
             val bookDTO = BookDTO(
                 name = getName(document, urlIndex),
@@ -150,16 +168,16 @@ fun addBook(bookDTO: BookDTO): Int {
     var book_id = 0
 
     Database.connect(
-        url = "jdbc:mariadb://192.168.0.152:3306/ranobe_read",
-        driver = "org.mariadb.jdbc.Driver",
-        user = "arisen",
-        password = System.getenv("maria_pass")
+        url = "jdbc:postgresql://45.156.21.65:5432/ranobe_read",
+        driver = "org.postgresql.Driver",
+        user = "ranobe",
+        password = "only_cum_inside_anime_girls"
     )
 
     transaction {
 
-        val existingBookId = Books.select { Books.name eq bookDTO.name }
-            .map { it[Books.id].value }
+        val existingBookId = Ranobe.select { Ranobe.name eq bookDTO.name }
+            .map { it[Ranobe.id].value }
             .firstOrNull()
 
         if (existingBookId != null) {
@@ -168,10 +186,10 @@ fun addBook(bookDTO: BookDTO): Int {
         } else {
 
             // Получаем или создаем автора
-            val author_id = Authors.select { Authors.name eq bookDTO.authorName }
+            val author_id = Authors.select { Authors.name_en eq bookDTO.authorName }
                 .map { it[Authors.id].value }
                 .firstOrNull() ?: Authors.insertAndGetId {
-                it[name] = bookDTO.authorName
+                it[name_en] = bookDTO.authorName
             }.value
 
             // Получаем или создаем страну
@@ -183,11 +201,11 @@ fun addBook(bookDTO: BookDTO): Int {
 
 
             // Вставляем книгу
-            book_id = Books.insertAndGetId {
+            book_id = Ranobe.insertAndGetId {
                 it[name] = bookDTO.name
                 it[enName] = bookDTO.enName
                 it[image] = bookDTO.image
-                it[descript] = bookDTO.descript
+                it[description] = bookDTO.descript
                 it[rating] = bookDTO.rating
                 it[status] = bookDTO.status
                 it[chapters] = bookDTO.chapters
@@ -199,9 +217,9 @@ fun addBook(bookDTO: BookDTO): Int {
 
             // Вставляем жанры книги
             bookDTO.genres.forEach { genreName ->
-                val genre_id = Genres.select { Genres.name eq genreName }
-                    .map { it[Genres.id].value }
-                    .firstOrNull() ?: Genres.insertAndGetId {
+                val genre_id = Tags.select { Tags.name eq genreName }
+                    .map { it[Tags.id].value }
+                    .firstOrNull() ?: Tags.insertAndGetId {
                     it[name] = genreName
                 }.value
                 BookGenres.insert {

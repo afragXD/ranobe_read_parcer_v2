@@ -15,10 +15,10 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
-    implementation("io.ktor:ktor-client-core:2.3.11")
-    implementation("io.ktor:ktor-client-cio:2.3.11")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.11")
-    implementation("io.ktor:ktor-serialization-gson:2.3.11")
+    implementation("io.ktor:ktor-client-core:3.0.3")
+    implementation("io.ktor:ktor-client-cio:3.0.3")
+    implementation("io.ktor:ktor-client-content-negotiation:3.0.3")
+    implementation("io.ktor:ktor-serialization-gson:3.0.3")
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("ch.qos.logback:logback-classic:1.4.12")
 
@@ -26,6 +26,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:0.51.0")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.51.0")
     implementation("org.mariadb.jdbc:mariadb-java-client:2.7.2")
+    implementation("org.postgresql:postgresql:42.7.2") // Use the latest version
 }
 
 tasks.test {
